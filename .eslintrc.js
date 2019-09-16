@@ -1,6 +1,7 @@
 // https://eslint.org/docs/user-guide/configuring
 
 module.exports = {
+  // 将 ESLint 限制到一个特定的项目，在配置文件里设置 "root": true。ESLint 一旦发现配置文件中有 "root": true，它就会停止在父级目录中寻找。
   root: true,
   parserOptions: {
     parser: 'babel-eslint'
@@ -25,6 +26,11 @@ module.exports = {
     'generator-star-spacing': 'off',
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'indent':'off'
+    //语句结尾要加分号
+    'semi':['error','always'],
+    //为了去控制vue文件中的缩进，关闭eslint自带的缩进而配置为vue提供的缩进
+    'indent':'off',
+    'vue/script-indent':['error', 4, {'baseIndent':1}],
+    'space-before-function-paren':['error', {'anonymous':'never','named':'never','asyncArrow':'always'}]
   }
 }

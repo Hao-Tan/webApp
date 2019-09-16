@@ -1,6 +1,6 @@
-# mall
+# online-mall
 
-> A Vue.js project
+> online-mall
 
 ## Build Setup
 
