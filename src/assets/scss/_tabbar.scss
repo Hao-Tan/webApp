@@ -7,10 +7,7 @@
     background-color: #fff;
     &-item{
         flex:1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+        @include flex-center(column);
 
         .iconfont{
             margin-bottom:4px;

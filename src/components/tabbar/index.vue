@@ -4,15 +4,15 @@
             <i class="iconfont icon-home"></i>
             <span>首页</span>
         </router-link>
-        <router-link class="g-tabbar-item" to="/home">
+        <router-link class="g-tabbar-item" to="/category">
             <i class="iconfont icon-category"></i>
             <span>分类</span>
         </router-link>
-        <router-link class="g-tabbar-item" to="/home">
+        <router-link class="g-tabbar-item" to="/cart">
             <i class="iconfont icon-cart"></i>
             <span>购物车</span>
         </router-link>
-        <router-link class="g-tabbar-item" to="/home">
+        <router-link class="g-tabbar-item" to="/personal">
             <i class="iconfont icon-personal"></i>
             <span>我的</span>
         </router-link>
@@ -21,8 +21,14 @@
 
 <script>
     export default{
-        name:"CTabbar",
+        name: 'CTabbar'
     };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+    @import "~assets/scss/mixins";
+
+    .router-link-active{
+        color: $link-active-color;
+    }
+</style>
