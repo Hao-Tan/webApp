@@ -21,7 +21,7 @@
     @import '~assets/scss/mixins';
 
     .header{
-        background-color: rgb(225,96,96) !important;
+        background-color: transparent !important;
 
         .iconfont{
             color: $icon-color-default;

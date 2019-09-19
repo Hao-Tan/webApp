@@ -4,18 +4,22 @@
         <header class="g-header-caontainer">
             <home-header></home-header>
         </header>
-        <div></div>
+        <div>
+            <home-slider></home-slider>
+        </div>
         <div class="g-backtop-container"></div>
     </div>
 </template>
 
 <script>
     import HomeHeader from './header';
+    import HomeSlider from './slider';
 
     export default{
         name: 'Home',
         components: {
-            HomeHeader
+            HomeHeader,
+            HomeSlider
         }
     };
 </script>

@@ -18,8 +18,8 @@
 <script>
     export default{
         name: 'Me',
-        props:{
-            title:{
+        props: {
+            title: {
                 type: String,
                 default: ''
             }
