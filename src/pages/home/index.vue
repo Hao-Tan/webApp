@@ -1,12 +1,16 @@
 <template>
     <div class="home">
         <router-view></router-view>
+
         <header class="g-header-caontainer">
             <home-header></home-header>
         </header>
-        <div>
+
+        <me-scroll>
             <home-slider></home-slider>
-        </div>
+            <home-nav></home-nav>
+        </me-scroll>
+
         <div class="g-backtop-container"></div>
     </div>
 </template>
@@ -14,12 +18,18 @@
 <script>
     import HomeHeader from './header';
     import HomeSlider from './slider';
+    import MeScroll from 'base/scroll';
+    import HomeNav from './nav';
+    import HomeRecommend from '.recommend';
 
     export default{
         name: 'Home',
         components: {
             HomeHeader,
-            HomeSlider
+            HomeSlider,
+            MeScroll,
+            HomeNav,
+            HomeRecommend
         }
     };
 </script>
