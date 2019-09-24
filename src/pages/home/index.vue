@@ -6,9 +6,10 @@
             <home-header></home-header>
         </header>
 
-        <me-scroll>
+        <me-scroll :data="recommends">
             <home-slider></home-slider>
             <home-nav></home-nav>
+            <home-recommend @loaded="getRecommends"></home-recommend>
         </me-scroll>
 
         <div class="g-backtop-container"></div>
@@ -20,7 +21,7 @@
     import HomeSlider from './slider';
     import MeScroll from 'base/scroll';
     import HomeNav from './nav';
-    import HomeRecommend from '.recommend';
+    import HomeRecommend from './recommend';
 
     export default{
         name: 'Home',
@@ -30,6 +31,19 @@
             MeScroll,
             HomeNav,
             HomeRecommend
+        },
+        data() {
+            return {
+                recommends: []
+            };
+        },
+        methods: {
+            updateScroll() {
+
+            },
+            getRecommends(recommends) {
+                this.recommends = recommends;
+            }
         }
     };
 </script>

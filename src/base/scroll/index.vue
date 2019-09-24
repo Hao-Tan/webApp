@@ -1,16 +1,14 @@
 <template>
-    <swiper :options="swiperOption">
-        <swiper-slide>
-            <slot></slot>
-        </swiper-slide>
-        <div class="swiper-scrollbar" v-if="scrollbar" slot="scrollbar"></div>
-    </swiper>
+  <swiper :options="swiperOption" ref="swiper">
+    <swiper-slide>
+      <slot></slot>
+    </swiper-slide>
+    <div class="swiper-scrollbar" v-if="scrollbar" slot="scrollbar"></div>
+  </swiper>
 </template>
-
 <script>
     import {swiper, swiperSlide} from 'vue-awesome-swiper';
-
-    export default{
+    export default {
         name: 'MeScroll',
         components: {
             swiper,
@@ -20,33 +18,48 @@
             scrollbar: {
                 type: Boolean,
                 default: true
+            },
+            data: {
+                type: [Array, Object]
             }
         },
         data() {
             return {
                 swiperOption: {
                     direction: 'vertical',
-                    setWrapperSize: true,
-                    slidesPerview: 'auto',
+                    slidesPerView: 'auto',
                     freeMode: true,
+                    setWrapperSize: true,
                     scrollbar: {
                         el: this.scrollbar ? '.swiper-scrollbar' : null,
                         hide: true
                     }
                 }
             };
+        },
+
+        watch: {
+            data() {
+                this.scrollbarUpdate();
+            }
+        },
+
+        methods: {
+            scrollbarUpdate() {
+                this.$refs.swiper && this.$refs.swiper.swiper.updateSize();
+            }
         }
     };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .swiper-container {
-        overflow: scroll;
+        overflow: hidden;
         width: 100%;
         height: 100%;
-    };
+    }
 
-    .swiper-slide {
+    .swiper-slide{
         height: auto;
     }
 </style>

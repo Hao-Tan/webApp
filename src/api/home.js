@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {SUCC_CODE, TIMEOUT} from './config';
+import jsonp from 'assets/js/jsonp';
+import {SUCC_CODE, TIMEOUT, HOME_RECOMMEND_PAGE_SIZE, JSONP_OPTIONS} from './config';
 
 // 获取首页幻灯片数据
 export const getHomeSlider = () => {
@@ -18,11 +19,27 @@ export const getHomeSlider = () => {
             }];
         }
     });
-    // .then(data => {
-    //     return new Promise(resolve => {
-    //         setTimeout(() => {
-    //             resolve(data);
-    //         }, 1000);
-    //     });
-    // });
+};
+
+// jsonp跨域获取热卖推荐
+export const getHomeRecommends = (page = 1, psize = HOME_RECOMMEND_PAGE_SIZE) => {
+    const url = 'https://ju.taobao.com/json/tg.ajaxGetItemsV2.json';
+    const params = {
+        page,
+        psize,
+        type: 0,
+        frontCatId: ''
+    };
+
+    return jsonp(url, params, JSONP_OPTIONS).then(res => {
+        if (res.code === '200') {
+            return res;
+        }
+
+        throw new Error('没有成功获取到数据');
+    }).catch(err => {
+        if (err) {
+            console.log(err);
+        }
+    });
 };
