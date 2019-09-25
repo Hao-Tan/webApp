@@ -6,10 +6,14 @@
             <home-header></home-header>
         </header>
 
-        <me-scroll :data="recommends">
+        <me-scroll
+            :data="recommends"
+            :pullDown="true"
+            @pull-down="pullToRefresh"
+            >
             <home-slider></home-slider>
             <home-nav></home-nav>
-            <home-recommend @loaded="getRecommends"></home-recommend>
+            <home-recommend @loaded="getRecommends" ref="homeRecommend"></home-recommend>
         </me-scroll>
 
         <div class="g-backtop-container"></div>
@@ -43,6 +47,9 @@
             },
             getRecommends(recommends) {
                 this.recommends = recommends;
+            },
+            pullToRefresh(callback) {
+                setTimeout(callback, 1000);
             }
         }
     };

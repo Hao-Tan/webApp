@@ -1,5 +1,8 @@
 <template>
   <swiper :options="swiperOption" ref="swiper">
+    <div class="mine-scroll-pull-down" v-if="pullDown">
+        <me-loading :text="pullDownText" ref="pullDownLoading"></me-loading>
+    </div>
     <swiper-slide>
       <slot></slot>
     </swiper-slide>
@@ -8,11 +11,19 @@
 </template>
 <script>
     import {swiper, swiperSlide} from 'vue-awesome-swiper';
+    import MeLoading from 'base/loading';
+    import {PULL_DOWN_HEIGHT,
+            PULL_DOWN_TEXT_INIT,
+            PULL_DOWN_TEXT_START,
+            PULL_DOWN_TEXT_ING,
+            PULL_DOWN_TEXT_END} from './config';
+
     export default {
         name: 'MeScroll',
         components: {
             swiper,
-            swiperSlide
+            swiperSlide,
+            MeLoading
         },
         props: {
             scrollbar: {
@@ -21,10 +32,16 @@
             },
             data: {
                 type: [Array, Object]
+            },
+            pullDown: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
             return {
+                pullingStatus: false,
+                pullDownText: PULL_DOWN_TEXT_INIT,
                 swiperOption: {
                     direction: 'vertical',
                     slidesPerView: 'auto',
@@ -33,6 +50,10 @@
                     scrollbar: {
                         el: this.scrollbar ? '.swiper-scrollbar' : null,
                         hide: true
+                    },
+                    on: {
+                        sliderMove: this.scroll,
+                        touchEnd: this.touchEnd
                     }
                 }
             };
@@ -46,7 +67,61 @@
 
         methods: {
             scrollbarUpdate() {
-                this.$refs.swiper && this.$refs.swiper.swiper.updateSize();
+                this.$refs.swiper && this.$refs.swiper.swiper.update();
+            },
+
+            scroll() {
+                if (this.pullingStatus) {
+                    return;
+                }
+
+                const swiper = this.$refs.swiper.swiper;
+
+                if (swiper.translate > 0) {
+                    if (!this.pullDown) {
+                        return;
+                    }
+
+                    if (swiper.translate > PULL_DOWN_HEIGHT) {
+                        this.$refs.pullDownLoading.setText(PULL_DOWN_TEXT_START);
+                    } else {
+                        this.$refs.pullDownLoading.setText(PULL_DOWN_TEXT_INIT);
+                    }
+                }
+            },
+            // 手指松开后触发事件
+            touchEnd() {
+                if (this.pullingStatus) {
+                    return;
+                }
+
+                const swiper = this.$refs.swiper.swiper;
+
+                if (swiper.translate > PULL_DOWN_HEIGHT) {
+                    if (!this.pullDown) {
+                        return;
+                    }
+
+                    this.pullingStatus = true;
+                    swiper.allowTouchMove = false;
+                    swiper.setTranslate(PULL_DOWN_HEIGHT);
+                    swiper.setTransition(swiper.params.speed);
+                    swiper.params.virtualTranslate = true;
+                    this.$refs.pullDownLoading.setText(PULL_DOWN_TEXT_ING);
+                    this.$emit('pull-down', this.pullDownEnd);
+                }
+            },
+
+            // 往外暴露的方法，用来恢复状态
+            pullDownEnd() {
+                const swiper = this.$refs.swiper.swiper;
+
+                this.$refs.pullDownLoading.setText(PULL_DOWN_TEXT_END);
+                swiper.allowTouchMove = true;
+                swiper.params.virtualTranslate = false;
+                swiper.setTransition(swiper.params.speed);
+                swiper.setTranslate(0);
+                this.pullingStatus = false;
             }
         }
     };
@@ -61,5 +136,13 @@
 
     .swiper-slide{
         height: auto;
+    }
+
+    .mine-scroll-pull-down {
+        position: absolute;
+        left: 0;
+        bottom: 100%;
+        width: 100%;
+        height: 80px;
     }
 </style>
