@@ -35,7 +35,6 @@
         height: 50px;
         background-color: #fff;
         position: relative;
-        color: #eee;
 
         &-left{
             margin-left: 10px;

@@ -2,16 +2,18 @@
     <div class="home">
         <router-view></router-view>
 
-        <header class="g-header-caontainer">
+        <header class="g-header-container">
             <home-header></home-header>
         </header>
 
         <me-scroll
             :data="recommends"
             :pullDown="true"
+            :pullUp="true"
             @pull-down="pullToRefresh"
+            @pull-up="pullToLoad"
             >
-            <home-slider></home-slider>
+            <home-slider ref="homeSlider"></home-slider>
             <home-nav></home-nav>
             <home-recommend @loaded="getRecommends" ref="homeRecommend"></home-recommend>
         </me-scroll>
@@ -49,6 +51,9 @@
                 this.recommends = recommends;
             },
             pullToRefresh(callback) {
+                this.$refs.homeSlider.update().then(callback);
+            },
+            pullToLoad(callback) {
                 setTimeout(callback, 1000);
             }
         }

@@ -1,5 +1,5 @@
 <template>
-    <swiper :options="swiperOption">
+    <swiper :options="swiperOption" :key="refreshKey">
         <slot></slot>
         <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
     </swiper>
@@ -32,24 +32,42 @@
             pagination: {
                 type: Boolean,
                 default: true
+            },
+            sliders: {
+                type: Array
             }
         },
         components: {
             swiper
         },
-        data() {
-            return {
-                swiperOption: {
+        watch: {
+            sliders(newData) {
+                if (newData.length === 0) {
+                    return;
+                }
+                this.refreshKey = Math.random();
+                this.swiperOption.loop = newData.length === 1 ? false : this.loop;
+            }
+        },
+        created() {
+            // 创建时调用初始化函数
+            this.init();
+        },
+        methods: {
+            // 初始化Swiper组件参数
+            init() {
+                this.refreshKey = Math.random();
+                this.swiperOption = {
                     watchOverflow: true,
                     direction: this.direction,
                     autoplay: this.interval ? {delay: this.interval, disableOnInteraction: false} : false,
                     slidesPerview: 1,
-                    loop: this.loop,
+                    loop: this.sliders.length <= 1 ? false : this.loop,
                     pagination: {
                         el: this.pagination ? '.swiper-pagination' : null
                     }
-                }
-            };
+                };
+            }
         }
     };
 </script>

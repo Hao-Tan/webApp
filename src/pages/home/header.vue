@@ -22,6 +22,8 @@
 
     .header{
         background-color: transparent !important;
+        z-index: $navbar-z-index;
+        position: absolute;
 
         .iconfont{
             color: $icon-color-default;

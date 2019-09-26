@@ -1,11 +1,12 @@
 <template>
     <div class="slider-wrapper">
-        <me-loading v-if="!sliders.length"></me-loading>
+        <me-loading v-if="sliders.length === 0"></me-loading>
         <me-slider
             :direction="direction"
             :loop="loop"
             :interval="interval"
             :pagination="pagination"
+            :sliders="sliders"
             v-else >
             <swiper-slide v-for="(item, index) in sliders" :key="index">
                 <a :href="item.linkUrl" class="slider-link">
@@ -43,8 +44,11 @@
             this.getSilders();
         },
         methods: {
+            update() {
+                return this.getSilders();
+            },
             getSilders() {
-                getHomeSlider().then(data => {
+                return getHomeSlider().then(data => {
                     this.sliders = data;
                 });
             }
