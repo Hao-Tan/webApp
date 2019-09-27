@@ -53,15 +53,22 @@
             this.getRecommends();
         },
         methods: {
-            // init获取数据
+            // 更新添加数据的接口
+            update() {
+                return this.getRecommends();
+            },
+
+            // 获取推荐数据
             getRecommends() {
                 if (this.currentPage <= this.totalPage) {
-                    getHomeRecommends(this.currentPage).then(res => {
+                    return getHomeRecommends(this.currentPage).then(res => {
                         this.recommends = this.recommends.concat(res.itemList);
                         this.currentPage++;
                         this.totalPage = res.totalPage;
                         this.$emit('loaded', this.recommends);
                     });
+                } else {
+                    return Promise.reject(new Error('no more data available'));
                 }
             }
         }

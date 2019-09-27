@@ -3,7 +3,7 @@
         <router-view></router-view>
 
         <header class="g-header-container">
-            <home-header></home-header>
+            <home-header :class="{'header-transition': isHeaderTransition}" ref="header"></home-header>
         </header>
 
         <me-scroll
@@ -12,13 +12,22 @@
             :pullUp="true"
             @pull-down="pullToRefresh"
             @pull-up="pullToLoad"
+            @scroll-end="homeScrollEnd"
+            @scroll="scroll"
+            @pull-down-transition-end="pullDownTransitionEnd"
+            ref="scroll"
             >
             <home-slider ref="homeSlider"></home-slider>
             <home-nav></home-nav>
             <home-recommend @loaded="getRecommends" ref="homeRecommend"></home-recommend>
         </me-scroll>
 
-        <div class="g-backtop-container"></div>
+        <div class="g-backtop-container">
+            <home-backtop
+                :visible="isBackTopVisible"
+                @backTop="homeBackTop"
+            ></home-backtop>
+        </div>
     </div>
 </template>
 
@@ -28,6 +37,8 @@
     import MeScroll from 'base/scroll';
     import HomeNav from './nav';
     import HomeRecommend from './recommend';
+    import HomeBacktop from 'base/backtop';
+    import {HEADER_TRANSITION_HEIGHT} from './config';
 
     export default{
         name: 'Home',
@@ -36,25 +47,61 @@
             HomeSlider,
             MeScroll,
             HomeNav,
-            HomeRecommend
+            HomeRecommend,
+            HomeBacktop
         },
         data() {
             return {
-                recommends: []
+                recommends: [],
+                isBackTopVisible: false,
+                isHeaderTransition: false
             };
         },
         methods: {
-            updateScroll() {
-
+            homeBackTop() {
+                this.$refs.scroll && this.$refs.scroll.scrollToTop();
             },
+
+            homeScrollEnd(translate, swiper, pullingStatus) {
+                this.isBackTopVisible = translate < 0 && -translate > swiper.height;
+                !pullingStatus && this.changeHeaderStatus(translate);
+            },
+
             getRecommends(recommends) {
                 this.recommends = recommends;
             },
+
             pullToRefresh(callback) {
                 this.$refs.homeSlider.update().then(callback);
             },
+
             pullToLoad(callback) {
-                setTimeout(callback, 1000);
+                this.$refs.homeRecommend.update().then(callback).catch(err => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    callback();
+                });
+            },
+
+            // 滚动事件
+            scroll(translate) {
+                this.changeHeaderStatus(translate);
+            },
+
+            pullDownTransitionEnd() {
+                this.$refs.header.show();
+            },
+
+            changeHeaderStatus(translate) {
+                if (translate > 0) {
+                    this.$refs.header.hide();
+                    return;
+                }
+
+                this.$refs.header.show();
+
+                this.isHeaderTransition = translate <= HEADER_TRANSITION_HEIGHT;
             }
         }
     };

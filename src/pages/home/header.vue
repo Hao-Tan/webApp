@@ -1,5 +1,5 @@
 <template>
-    <me-navbar class="header" title="jqjqjqjq">
+    <me-navbar class="header" v-show="visible">
         <i class="iconfont icon-scan" slot="left"></i>
         <div slot="center">搜索框</div>
         <i class="iconfont icon-msg" slot="right"></i>
@@ -13,6 +13,19 @@
         name: 'HomeHeader',
         components: {
             MeNavbar
+        },
+        data() {
+            return {
+                visible: true
+            };
+        },
+        methods: {
+            show() {
+                this.visible = true;
+            },
+            hide() {
+                this.visible = false;
+            }
         }
     };
 </script>
@@ -21,9 +34,16 @@
     @import '~assets/scss/mixins';
 
     .header{
-        background-color: transparent !important;
-        z-index: $navbar-z-index;
-        position: absolute;
+        &.mine-navbar{
+            background-color: transparent;
+            transition: background-color 0.5s;
+            z-index: $navbar-z-index;
+            position: absolute;
+        }
+
+        &.header-transition{
+            background-color: $header-bgc-translucent;
+        }
 
         .iconfont{
             color: $icon-color-default;

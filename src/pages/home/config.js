@@ -6,6 +6,9 @@ export const sliderOptions = {
     pagination: true
 };
 
+// 触发顶部栏背景颜色改变的高度，上滑为负数。
+export const HEADER_TRANSITION_HEIGHT = -100;
+
 export const navItems = [
     // 原nav.uve的数据
     {
