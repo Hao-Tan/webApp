@@ -20,7 +20,9 @@
                 class="recommend-link"
                 :to="{name: 'home-product', params: {id: item.baseinfo.itemId}}"
                 >
-                    <p class="recommend-pic"><img v-lazy="item.baseinfo.picUrl" class="recommend-img"></p>
+                    <p class="recommend-pic">
+                        <img v-lazy="item.baseinfo.picUrl" class="recommend-img">
+                    </p>
                     <p class="recommend-name">{{item.name.shortName}}</p>
                     <p class="recommend-origPrice"><del>￥{{item.price.origPrice}}</del></p>
                     <p class="recommend-info">
