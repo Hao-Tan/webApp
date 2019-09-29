@@ -7,7 +7,8 @@
             :interval="interval"
             :pagination="pagination"
             :sliders="sliders"
-            v-else >
+            v-else
+            >
             <swiper-slide v-for="(item, index) in sliders" :key="index">
                 <a :href="item.linkUrl" class="slider-link">
                     <img :src="item.picUrl"  class="slider-img">

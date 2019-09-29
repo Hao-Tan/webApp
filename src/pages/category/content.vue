@@ -22,7 +22,7 @@
             <div class="section" v-for="(section, index) in content.data" :key="index">
                 <h4 class="section-title">{{section.name}}</h4>
                 <ul class="section-list">
-                    <li class="section-item" v-for="(item, subindex) in section.itemList">
+                    <li class="section-item" v-for="(item, subindex) in section.itemList" :key="subindex">
                         <a :href="item.linkUrl" class="section-link">
                             <p class="section-pic">
                                 <img v-lazy="item.picUrl" class="section-img">
@@ -46,7 +46,7 @@
 <script>
     import {CATEGORY_CONTENT_KEY, CATEGORY_CONTENT_UPDATE_TIME_INTERVAL} from './config';
     import {getCategoryDetail} from 'api/category';
-    import Storage from 'assets/js/storage';
+    import storage from 'assets/js/storage';
     import MeLoading from 'base/loading';
     import MeScroll from 'base/scroll';
     import MeBacktop from 'base/backtop';
@@ -74,28 +74,50 @@
         watch: {
             curId(id) {
                 this.isLoading = true;
-                this.getContent(id).then(() => this.isLoading = false);
+                this.getContent(id).then(() => { this.isLoading = false; });
             }
         },
         methods: {
             getContent(id) {
-                // let content = storage.get(CATEGORY_CONTENT_KEY);
-                // let updateTime;
-                // const curTime = new Date().getTime();
+                let content = storage.get(CATEGORY_CONTENT_KEY);
+                let updateTime;
+                const curTime = new Date().getTime();
 
-                // if (content && content[id]) {
-                //     updateTime = content[id].updateTime || 0;
-                //     if (curTime - updateTime <= CATEGORY_CONTENT_UPDATE_TIME_INTERVAL) {
-                //         return Promise.reolve(content[id].data);
-                //     }
-                // }
-
-                return getCategoryDetail(id).then(data => {
-                    if (data) {
-                        this.content = data;
-                        return data;
+                if (content && content[id]) {
+                    updateTime = content[id].updateTime || 0;
+                    if (curTime - updateTime <= CATEGORY_CONTENT_UPDATE_TIME_INTERVAL) { // 缓存中获取数据
+                        return this.getContentByLocalStorage(content[id]);
+                    } else { // 缓存过期，通过API获取数据
+                        return this.getContentByAPI(id).then(() => {
+                            this.updateDataToLocalStorage(content, id, curTime);
+                        });
                     }
+                } else { // 没有缓存数据，调用API
+                    return this.getContentByAPI(id).then(() => {
+                        this.updateDataToLocalStorage(content, id, curTime);
+                    });
+                }
+            },
+            getContentByLocalStorage(content) {
+                this.content = content.data;
+                return Promise.resolve();
+            },
+            getContentByAPI(id) {
+                return getCategoryDetail(id).then(content => {
+                    return new Promise(resolve => {
+                        if (content) {
+                            this.content = content;
+                            resolve();
+                        }
+                    });
                 });
+            },
+            updateDataToLocalStorage(content, id, curTime) {
+                content = content || {};
+                content[id] = {};
+                content[id].data = this.content;
+                content[id].updateTime = curTime;
+                storage.set(CATEGORY_CONTENT_KEY, content);
             },
             backToTop() {
                 this.$refs.scroll && this.$refs.scroll.scrollToTop();
