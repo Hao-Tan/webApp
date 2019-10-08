@@ -1,12 +1,16 @@
 <template>
     <me-navbar class="header" v-show="visible">
         <i class="iconfont icon-scan" slot="left"></i>
+
         <me-searchbox
             placeholder="开学季有礼，好货5折起"
+            :fake="true"
             slot="center"
             @query="getQuery"
+            @click.native="goToSearch"
             >
         </me-searchbox>
+
         <i class="iconfont icon-msg" slot="right"></i>
     </me-navbar>
 </template>
@@ -35,6 +39,9 @@
             },
             getQuery(query) {
                 console.log(query);
+            },
+            goToSearch() {
+                this.$router.push('/search');
             }
         }
     };

@@ -138,7 +138,6 @@
     .content-wrapper{
         width: 100%;
         height: 100%;
-        padding: 0 10px 10px;
 
         & .loading-container{
             @include flex-center();
@@ -156,7 +155,7 @@
 
         .content{
             width: 100%;
-            padding-top: 10px;
+            padding: 10px;
 
             .pic-img{
                 width: 100%;
@@ -164,6 +163,11 @@
         }
 
         .section{
+            padding: 0 10px;
+
+            &:last-child{
+                margin-bottom: 20px;
+            }
 
             &-title{
                 font-size: $font-size-l;

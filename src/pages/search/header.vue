@@ -1,12 +1,14 @@
 <template>
     <me-navbar class='header'>
+        <i class="iconfont icon-back" slot="left" @click="back"></i>
+
         <me-searchbox
             slot="center"
+            :fake="false"
             placeholder="开学季有礼，好货5折起"
-            fake
-            @click.native="goToSearch"
+            @query="query"
             ></me-searchbox>
-        <i class="iconfont icon-msg" slot="right"></i>
+
     </me-navbar>
 </template>
 
@@ -15,14 +17,17 @@
     import MeSearchbox from 'base/searchbox';
 
     export default {
-        name: 'CategoryHeader',
+        name: 'SearchHeader',
         components: {
             MeNavbar,
             MeSearchbox
         },
         methods: {
-            goToSearch() {
-                this.$router.push('./search');
+            back() {
+                this.$emit('back');
+            },
+            query(query) {
+                this.$emit('query', query);
             }
         }
     };
@@ -31,14 +36,13 @@
 <style scoped lang="scss">
     @import "~assets/scss/mixins";
 
-    .header {
-        &.mine-navbar {
-            background-color: $header-bgc-translucent;
+    .header{
+        .iconfont{
+            font-size: $icon-font-size;
         }
 
-        .iconfont {
-            color: $icon-color-default;
-            font-size: $icon-font-size;
+        & .mine-searchbox-wrapper{
+            background-color: #eee;
         }
     }
 </style>
