@@ -58,7 +58,7 @@
         padding-left: 10px;
         background-color: #fff;
         border-bottom: 1px solid $border-color;
-        margin: 10px 0;
+        margin: 2px 0 10px;
 
         &-title{
             font-size: $font-size-l;

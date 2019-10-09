@@ -10,10 +10,16 @@
             <div class="g-content-container">
                 <me-scroll ref="scroll">
                     <search-hot
-                        @wordsLoaded="scorllUpdate"
+                        @wordsLoaded="scrollUpdate"
                     ></search-hot>
-                    <search-history></search-history>
+                    <search-history
+                        @itemRemoved="scrollUpdate"
+                        @showConfirm="showConfirm"
+                        ref="history"
+                    ></search-history>
                 </me-scroll>
+
+                <me-confirm msg="确定要清空历史搜索吗？" ref="confirm" @ok="removeAll"></me-confirm>
             </div>
         </div>
     </transition>
@@ -25,6 +31,7 @@
     import SearchHistory from './history';
     import SearchResult from './result';
     import MeScroll from 'base/scroll';
+    import MeConfirm from 'base/confirm';
 
     export default{
         name: 'Search',
@@ -33,7 +40,8 @@
             SearchHot,
             SearchHistory,
             SearchResult,
-            MeScroll
+            MeScroll,
+            MeConfirm
         },
         methods: {
             back() {
@@ -42,8 +50,14 @@
             query(query) {
                 console.log(query);
             },
-            scorllUpdate() {
+            scrollUpdate() {
                 this.$refs.scroll.scrollbarUpdate();
+            },
+            showConfirm() {
+                this.$refs.confirm.show();
+            },
+            removeAll() {
+                this.$refs.history.removeAll();
             }
         }
     };
