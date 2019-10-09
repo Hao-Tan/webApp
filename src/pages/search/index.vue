@@ -8,8 +8,11 @@
                 ></search-header>
             </header>
             <div class="g-content-container">
-                <me-scroll>
-                    <search-hot></search-hot>
+                <me-scroll ref="scroll">
+                    <search-hot
+                        @wordsLoaded="scorllUpdate"
+                    ></search-hot>
+                    <search-history></search-history>
                 </me-scroll>
             </div>
         </div>
@@ -38,6 +41,9 @@
             },
             query(query) {
                 console.log(query);
+            },
+            scorllUpdate() {
+                this.$refs.scroll.scrollbarUpdate();
             }
         }
     };
