@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jsonp from 'assets/js/jsonp';
-import {jsonpOptions, TIMEOUT} from './config';
+import {TIMEOUT, JSONP_OPTIONS} from './config';
 
 // 获取热门搜索数据-- axios-ajax
 export const getSearchHotKeyWords = () => {

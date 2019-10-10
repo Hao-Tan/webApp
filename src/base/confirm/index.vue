@@ -2,7 +2,7 @@
     <transition name="mine-confirm">
         <div class="mine-confirm-wrapper" v-if="visible" @click="hide">
             <div class="mine-confirm" @click.stop>
-                <div class="mine-confirm-title"></div>
+                <div class="mine-confirm-title">{{title}}</div>
                 <div class="mine-confirm-msg">{{msg}}</div>
                 <div class="mine-confirm-btns">
                     <button class="mine-confirm-btn mine-confirm-ok" @click="ok">确定</button>
@@ -18,7 +18,12 @@
         name: 'MeConfirm',
         props: {
             msg: {
-                type: String
+                type: String,
+                default: '确定执行该操作吗？'
+            },
+            title: {
+                type: String,
+                default: ''
             }
         },
         data() {
@@ -97,6 +102,33 @@
 
         &-cancel{
             border-top: 1px solid $border-color;
+        }
+    }
+
+    .mine-confirm{
+        &-enter-active,
+        &-leave-active{
+            transition: opacity 0.3s;
+        }
+
+        &-enter,
+        &-leave-to{
+            opacity: 0;
+        }
+
+        animation: bounce-in 0.3s;
+
+    }
+
+    @keyframes bounce-in{
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
         }
     }
 </style>

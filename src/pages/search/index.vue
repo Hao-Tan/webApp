@@ -8,7 +8,7 @@
                 ></search-header>
             </header>
             <div class="g-content-container">
-                <me-scroll ref="scroll">
+                <me-scroll ref="scroll" v-if="!queryWord">
                     <search-hot
                         @wordsLoaded="scrollUpdate"
                     ></search-hot>
@@ -19,7 +19,14 @@
                     ></search-history>
                 </me-scroll>
 
-                <me-confirm msg="确定要清空历史搜索吗？" ref="confirm" @ok="removeAll"></me-confirm>
+                <search-result v-else></search-result>
+
+                <me-confirm
+                    msg="确定要清空历史搜索吗？"
+                    ref="confirm"
+                    @ok="removeAll"
+                    @cancel="refreshHistory"
+                    ></me-confirm>
             </div>
         </div>
     </transition>
@@ -43,12 +50,17 @@
             MeScroll,
             MeConfirm
         },
+        data() {
+            return {
+                queryWord: ''
+            };
+        },
         methods: {
             back() {
                 this.$router.back();
             },
             query(query) {
-                console.log(query);
+                this.queryWord = query;
             },
             scrollUpdate() {
                 this.$refs.scroll.scrollbarUpdate();
@@ -58,6 +70,9 @@
             },
             removeAll() {
                 this.$refs.history.removeAll();
+            },
+            refreshHistory() {
+                this.$refs.history.refreshHistory();
             }
         }
     };

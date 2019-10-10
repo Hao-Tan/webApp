@@ -12,7 +12,9 @@
                 @click.stop="removeItem(item)"></i>
             </li>
         </transition-group>
-        <a href="javascript:;" class="history-btn" @click="showConfirm">
+        <a href="javascript:;"
+            class="history-btn"
+            @click="showConfirm">
             <i class="iconfont icon-clear"></i>
             <span class="history-btn-text">清空历史搜索</span>
         </a>
@@ -28,6 +30,7 @@
     export default{
         name: 'searchHistory',
         mixins: [searchMixin],
+        // data中存储历史记录的数组，初始化获取到
         data() {
             return {
                 history: []
@@ -52,8 +55,11 @@
                 this.$emit('showConfirm');
             },
             removeAll() {
-                this.history = [];
-                storage.set(SEARCH_HISTORY_KEYWORD_KEY, this.history);
+                storage.remove(SEARCH_HISTORY_KEYWORD_KEY);
+                this.refreshHistory();
+            },
+            refreshHistory() {
+                this.getHistory();
             }
         }
     };
