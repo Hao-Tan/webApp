@@ -19,7 +19,7 @@
                     ></search-history>
                 </me-scroll>
 
-                <search-result v-else></search-result>
+                <search-result v-else :queryWord="queryWord"></search-result>
 
                 <me-confirm
                     msg="确定要清空历史搜索吗？"

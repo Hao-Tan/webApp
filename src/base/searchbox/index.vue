@@ -47,12 +47,15 @@
         },
         watch: {
             query: _.debounce(function() {
-                this.query && this.$emit('query', this.query);
+                this.$emit('query', this.query);
             }, DELAYTIME)
+        },
+        mounted() {
+            this.clear();
         },
         methods: {
             focus() {
-                this.$refs.input && this.$refs.input.focus();
+                this.$refs.input.focus();
             },
             clear() {
                 this.query = '';

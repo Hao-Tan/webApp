@@ -95,7 +95,9 @@
 
             // 更新swiper-scrollbar
             scrollbarUpdate() {
-                this.$refs.swiper && this.$refs.swiper.swiper.update();
+                this.$nextTick(() => {
+                    this.$refs.swiper && this.$refs.swiper.swiper.update();
+                });
             },
             // 上下拉动时改变提示加载提示文字
             scroll() {

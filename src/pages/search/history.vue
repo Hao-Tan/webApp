@@ -49,7 +49,7 @@
                 });
 
                 storage.set(SEARCH_HISTORY_KEYWORD_KEY, this.history);
-                this.$emit('itemRemoved');
+                setTimeout(() => { this.$emit('itemRemoved'); }, 400);
             },
             showConfirm() {
                 this.$emit('showConfirm');
@@ -71,7 +71,7 @@
     .history{
         background-color: #fff;
         border-bottom: 1px solid $border-color;
-        margin: 10px 0;
+        margin: 10px 0 0;
         padding-bottom: 30px;
 
         &-title{

@@ -6,7 +6,6 @@
             placeholder="开学季有礼，好货5折起"
             :fake="true"
             slot="center"
-            @query="getQuery"
             @click.native="goToSearch"
             >
         </me-searchbox>
@@ -36,9 +35,6 @@
             },
             hide() {
                 this.visible = false;
-            },
-            getQuery(query) {
-                console.log(query);
             },
             goToSearch() {
                 this.$router.push('/search');

@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="g-container">
         <div class="g-view-container">
-            <keep-alive>
+            <keep-alive exclude="Search">
                 <router-view></router-view>
             </keep-alive>
         </div>
