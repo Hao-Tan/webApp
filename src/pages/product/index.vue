@@ -1,12 +1,19 @@
 <template>
     <div class="product">
-        Product
+        <div class="g-header-contianer">
+            <product-header></product-header>
+        </div>
     </div>
 </template>
 
 <script>
+    import ProductHeader from './header';
+
     export default{
-        name: 'Product'
+        name: 'Product',
+        components: {
+            ProductHeader
+        }
     };
 </script>
 

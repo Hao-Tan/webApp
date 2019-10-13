@@ -54,6 +54,7 @@ export const getHomeRecommends = (page = 1, psize = HOME_RECOMMEND_PAGE_SIZE) =>
     };
 
     return jsonp(url, params, JSONP_OPTIONS).then(res => {
+        console.log(res);
         if (res.code === '200') {
             return res;
         }

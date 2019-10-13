@@ -66,13 +66,12 @@
             bottom: 0;
             left: 30%;
             right: 30%;
-            font-size: 18px;
+            font-size: 16px;
             @include flex-center();
         }
 
         &-text{
             @include ellipsis();
-            font-size: 18px;
             line-height: 1.5em;
             padding: 0 5px;
         }
