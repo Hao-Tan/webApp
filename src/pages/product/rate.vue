@@ -15,8 +15,8 @@
                 </p>
                 <p class="item-content">{{rate.content}}</p>
                 <p class="item-moreinfo">
-                    <span class="item-moreinfo-date"></span>
-                    <span class="item-moreinfo-sku"></span>
+                    <span class="item-moreinfo-date">{{rate.dateTime}}</span>
+                    <span class="item-moreinfo-sku">{{rate.skuInfo}}</span>
                 </p>
             </li>
         </ul>
@@ -66,6 +66,29 @@
 
         .item-user{
             margin: 15px 0 10px;
+            @include flex-center();
+            justify-content: flex-start;
+
+            &-pic{
+                width: 20px;
+                margin-right: 5px;
+                border-radius: 50%;
+            }
+        }
+
+        .item-content{
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .item-moreinfo{
+            color: #999;
+            margin-top: 8px;
+            line-height: 1.5;
+
+            &-sku{
+                margin-left: 5px;
+            }
         }
     }
 </style>

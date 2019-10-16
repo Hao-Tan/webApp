@@ -9,7 +9,9 @@
                 <product-slider :sliders="res.sliders"></product-slider>
                 <product-briefinfo :productDetail="res.content"></product-briefinfo>
                 <product-rate :rate="res.content.rate"></product-rate>
+                <product-seller :seller="res.content.seller"></product-seller>
             </me-scroll>
+            <product-footer></product-footer>
         </div>
     </div>
 </template>
@@ -19,6 +21,8 @@
     import ProductSlider from './slider';
     import ProductBriefinfo from './briefinfo';
     import ProductRate from './rate';
+    import ProductSeller from './seller';
+    import ProductFooter from './footer';
     import MeScroll from 'base/scroll';
     import MeLoading from 'base/loading';
     import {getProductDetail} from 'api/product';
@@ -30,6 +34,8 @@
             ProductSlider,
             ProductBriefinfo,
             ProductRate,
+            ProductSeller,
+            ProductFooter,
             MeLoading,
             MeScroll
         },
@@ -62,6 +68,7 @@
 
         &-container{
             height: 100%;
+            padding-bottom: $tabbar-height;
         }
     }
 
