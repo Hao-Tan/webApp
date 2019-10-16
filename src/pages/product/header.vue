@@ -9,7 +9,6 @@
 
 <script>
     import MeNavbar from 'base/navbar';
-    import {getProductDetail} from 'api/product';
 
     export default{
         name: 'ProductHeader',
@@ -20,10 +19,6 @@
             back() {
                 this.$router.back();
             }
-        },
-        created() {
-            console.log(this.$route);
-            console.log(getProductDetail(this.$route.params.id));
         }
     };
 </script>

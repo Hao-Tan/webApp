@@ -1,18 +1,48 @@
 <template>
     <div class="product">
-        <div class="g-header-contianer">
-            <product-header></product-header>
+        <me-loading v-if="!res.sliders"></me-loading>
+        <div class="product-container" v-else>
+            <div class="g-header-container">
+                <product-header></product-header>
+            </div>
+            <me-scroll>
+                <product-slider :sliders="res.sliders"></product-slider>
+                <product-briefinfo :productDetail="res.content"></product-briefinfo>
+                <product-rate :rate="res.content.rate"></product-rate>
+            </me-scroll>
         </div>
     </div>
 </template>
 
 <script>
     import ProductHeader from './header';
+    import ProductSlider from './slider';
+    import ProductBriefinfo from './briefinfo';
+    import ProductRate from './rate';
+    import MeScroll from 'base/scroll';
+    import MeLoading from 'base/loading';
+    import {getProductDetail} from 'api/product';
 
     export default{
         name: 'Product',
         components: {
-            ProductHeader
+            ProductHeader,
+            ProductSlider,
+            ProductBriefinfo,
+            ProductRate,
+            MeLoading,
+            MeScroll
+        },
+        data() {
+            return {
+                res: {}
+            };
+        },
+        created() {
+            getProductDetail(this.$route.params.id).then(res => {
+                this.res = res;
+                console.log(this.res);
+            });
         }
     };
 </script>
@@ -29,5 +59,13 @@
         z-index: $product-z-index;
         width: 100%;
         height: 100%;
+
+        &-container{
+            height: 100%;
+        }
+    }
+
+    .rate{
+        margin: 10px 0;
     }
 </style>

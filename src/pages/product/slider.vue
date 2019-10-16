@@ -1,17 +1,15 @@
 <template>
     <div class="slider-wrapper">
-        <me-loading v-if="sliders.length === 0"></me-loading>
         <me-slider
             :direction="direction"
             :loop="loop"
             :interval="interval"
             :pagination="pagination"
             :sliders="sliders"
-            v-else
             >
             <swiper-slide v-for="(item, index) in sliders" :key="index">
-                <a :href="item.linkUrl" class="slider-link">
-                    <img :src="item.picUrl"  class="slider-img">
+                <a :href="item" class="slider-link">
+                    <img :src="item"  class="slider-img">
                 </a>
             </swiper-slide>
         </me-slider>
@@ -20,39 +18,23 @@
 
 <script>
     import MeSlider from 'base/slider';
-    import MeLoading from 'base/loading';
     import {swiperSlide} from 'vue-awesome-swiper';
     import {sliderOptions} from './config';
-    import {getHomeSlider} from 'api/home';
 
     export default{
         name: 'HomeSlider',
         components: {
             MeSlider,
-            MeLoading,
             swiperSlide
         },
+        props: {sliders: Array},
         data() {
             return {
                 direction: sliderOptions.direction,
                 loop: sliderOptions.loop,
                 interval: sliderOptions.interval,
-                pagination: sliderOptions.pagination,
-                sliders: []
+                pagination: sliderOptions.pagination
             };
-        },
-        created() {
-            this.getSilders();
-        },
-        methods: {
-            update() {
-                return this.getSilders();
-            },
-            getSilders() {
-                return getHomeSlider().then(data => {
-                    this.sliders = data;
-                });
-            }
         }
     };
 </script>
@@ -60,17 +42,23 @@
 <style lang="scss" scoped>
     .slider-wrapper {
         width: 100%;
-        height: 183px;
     }
 
     .slider-link {
         display: block;
+        padding-top: 100%;
+        position: relative;
     }
 
     .slider-link,
     .slider-img {
         overflow: hidden;
         width: 100%;
-        height: 100%;
+    }
+
+    .slider-img{
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 </style>
