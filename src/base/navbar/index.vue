@@ -66,7 +66,7 @@
             bottom: 0;
             left: 30%;
             right: 30%;
-            font-size: 16px;
+            font-size: $font-size-l;
             @include flex-center();
         }
 

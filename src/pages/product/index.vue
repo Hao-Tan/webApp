@@ -47,7 +47,6 @@
         created() {
             getProductDetail(this.$route.params.id).then(res => {
                 this.res = res;
-                console.log(this.res);
             });
         }
     };
