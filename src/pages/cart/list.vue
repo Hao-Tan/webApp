@@ -44,7 +44,8 @@
             height: 100%;
         }
 
-        &-content{
+        &-action,
+        &-items{
             background-color: #fff;
         }
 
