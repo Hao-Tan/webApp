@@ -17,6 +17,9 @@
         name: 'App',
         components: {
             CTabbar
+        },
+        created() {
+            this.$store.commit("getItems");
         }
     };
 </script>

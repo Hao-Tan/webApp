@@ -10,7 +10,7 @@
                 <div class="edit">编辑商品</div>
             </div>
             <ul class="list-items">
-                <cart-item></cart-item>
+                <cart-item v-for="item in cartItems" :itemInfo="item"></cart-item>
             </ul>
         </me-scroll>
     </div>
@@ -27,10 +27,10 @@
             MeScroll,
             CartItem
         },
-        data() {
-            return {
-                cartItems: [1]
-            };
+        computed: {
+            cartItems() {
+                return this.$store.state.cartItems;
+            }
         }
     };
 </script>

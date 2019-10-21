@@ -13,7 +13,7 @@
                 <i class="iconfont icon-collect"></i>
                 <span>收藏</span>
             </a>
-            <a href="javascript:;" class="cart">加入购物车</a>
+            <a href="javascript:;" class="cart" @click="addToCart">加入购物车</a>
             <a href="javascript:;" class="buy">马上抢</a>
         </div>
     </div>
@@ -21,7 +21,12 @@
 
 <script>
     export default {
-        name: 'ProductFooter'
+        name: 'ProductFooter',
+        methods: {
+            addToCart() {
+                this.$emit("addToCart");
+            }
+        }
     };
 </script>
 

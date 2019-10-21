@@ -11,7 +11,7 @@
                 <product-rate :rate="res.content.rate"></product-rate>
                 <product-seller :seller="res.content.seller"></product-seller>
             </me-scroll>
-            <product-footer></product-footer>
+            <product-footer @addToCart="addToCart"></product-footer>
         </div>
     </div>
 </template>
@@ -48,6 +48,15 @@
             getProductDetail(this.$route.params.id).then(res => {
                 this.res = res;
             });
+        },
+        methods: {  
+            addToCart() {
+                this.$store.commit("addCartItem",{
+                    name: this.res.content.title,
+                    price: parseInt(this.res.content.priceText),
+                    pic: this.res.sliders[0]
+                })
+            }
         }
     };
 </script>

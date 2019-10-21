@@ -4,7 +4,8 @@
         <div class="item-check">
             <i class="iconfont">&#xe6ba;</i>
         </div>
-
+        
+        <!-- 商品图片 -->
         <div class="item-img">
             <img src="http://gtms03.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_80x80.jpg">
         </div>
@@ -16,8 +17,12 @@
                 <div class="item-info-price">
                     ￥<span class="item-info-price-text">2999</span>
                 </div>
-                <cart-amount :amount.sync="amount"></cart-amount>
+                <cart-amount :amount.sync="itemInfo.amount"></cart-amount>
             </div>
+        </div>
+
+        <div class="item-remove">
+            删除
         </div>
     </li>
 </template>
@@ -29,10 +34,22 @@
         components: {
             CartAmount
         },
-        data() {
-            return {
-                amount: 1
-            };
+        props: {
+            itemInfo: {
+                type: Object,
+                default: () =>{
+                    return {
+                        id: 1,
+                        name: '',
+                        price: '',
+                        pic: '',
+                        amount: 1
+                    }
+                }
+            }
+        },
+        created(){
+            console.log(this.itemInfo)
         }
     };
 </script>
@@ -44,6 +61,7 @@
             border-bottom: 1px solid $bgc-theme;
             padding: 15px 10px;
             display: flex;
+            flex-wrap: wrap;
 
             &:last-child{
                 border-bottom: none;
@@ -100,6 +118,12 @@
                         font-size: 22px;
                     }
                 }
+            }
+
+            &-remove{
+                width: 100%;
+                text-align: right;
+                padding: 20px 10px 0 0;
             }
         }
 </style>
