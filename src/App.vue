@@ -19,7 +19,7 @@
             CTabbar
         },
         created() {
-            this.$store.commit("getItems");
+            this.$store.commit('getItems');
         }
     };
 </script>

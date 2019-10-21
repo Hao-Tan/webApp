@@ -10,7 +10,7 @@
                 <div class="edit">编辑商品</div>
             </div>
             <ul class="list-items">
-                <cart-item v-for="item in cartItems" :itemInfo="item"></cart-item>
+                <cart-item v-for="item in cartItems" :itemInfo="item" :key="item.name"></cart-item>
             </ul>
         </me-scroll>
     </div>

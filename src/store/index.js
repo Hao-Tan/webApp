@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import _ from 'lodash';
 import storage from 'assets/js/storage';
-import {CART_CONTENT_KEY} from 'pages/cart/config'
+import {CART_CONTENT_KEY} from 'pages/cart/config';
 
 Vue.use(Vuex);
 
@@ -22,34 +22,34 @@ export default new Vuex.Store({
     mutations: {
         // 移除与传入名称相同的商品
         removeCartItem(state, {itemName}) {
-            state.cartItems = _.remove(state.cartItems, function (item){
+            state.cartItems = _.remove(state.cartItems, function(item) {
                 return item.name !== itemName;
             });
-            this.commit("updateItems");
+            this.commit('updateItems');
         },
 
         // 添加到购物车，如果存在就amount加1，否则就添加该商品到数组最末端
         addCartItem(state, item) {
-            let name = item.name;
-            let itemIndex = _.findIndex(state.cartItems, name => {
-                return state.cartItems.name === item.name;
+            let itemIndex = _.findIndex(state.cartItems, originItem => {
+                return originItem.name === item.name;
             });
-
+            console.log(itemIndex, item);
             if (itemIndex >= 0) {
-                this.commit("changeAmount",{itemName:item.name,amount:state.cartItems[itemIndex].amount+1});
+                this.commit('changeAmount', {itemName: item.name, amount: state.cartItems[itemIndex].amount + 1});
             } else {
+                item.amount = 1;
                 state.cartItems.push(item);
             }
-            this.commit("updateItems");
+            this.commit('updateItems');
         },
 
         // 改变商品的个数
         changeAmount(state, {itemName, amount}) {
-            let itemIndex = _.findIndex(state.cartItems, itemName => {
-                return sate.cartItems.name === itemName;
+            let itemIndex = _.findIndex(state.cartItems, originItem => {
+                return originItem.name === itemName;
             });
             state.cartItems[itemIndex].amount = amount;
-            this.commit("updateItems");
+            this.commit('updateItems');
         },
 
         // 从缓存中获取购物车列表
@@ -67,8 +67,8 @@ export default new Vuex.Store({
         },
 
         // 将购物车列表更新到缓存
-        updateItems(state){
-            storage.set(CART_CONTENT_KEY,state.cartItems);
+        updateItems(state) {
+            storage.set(CART_CONTENT_KEY, state.cartItems);
         }
     }
 });

@@ -24,7 +24,7 @@
         name: 'ProductFooter',
         methods: {
             addToCart() {
-                this.$emit("addToCart");
+                this.$emit('addToCart');
             }
         }
     };

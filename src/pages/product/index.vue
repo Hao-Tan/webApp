@@ -49,13 +49,13 @@
                 this.res = res;
             });
         },
-        methods: {  
+        methods: {
             addToCart() {
-                this.$store.commit("addCartItem",{
+                this.$store.commit('addCartItem', {
                     name: this.res.content.title,
-                    price: parseInt(this.res.content.priceText),
+                    price: parseFloat(this.res.content.priceText),
                     pic: this.res.sliders[0]
-                })
+                });
             }
         }
     };

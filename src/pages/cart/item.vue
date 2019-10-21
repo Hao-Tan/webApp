@@ -4,18 +4,18 @@
         <div class="item-check">
             <i class="iconfont">&#xe6ba;</i>
         </div>
-        
+
         <!-- 商品图片 -->
         <div class="item-img">
-            <img src="http://gtms03.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_80x80.jpg">
+            <img :src="itemInfo.pic">
         </div>
 
         <!-- 右侧信息栏 -->
         <div class="item-info">
-            <div class="item-info-title">apple iPad 平板电脑apple iPad 平板电脑apple iPad 平板电脑apple iPad 平板电脑apple iPad 平板电脑</div>
+            <div class="item-info-title">{{itemInfo.name}}</div>
             <div class="item-info-more">
                 <div class="item-info-price">
-                    ￥<span class="item-info-price-text">2999</span>
+                    ￥<span class="item-info-price-text">{{itemInfo.price}}</span>
                 </div>
                 <cart-amount :amount.sync="itemInfo.amount"></cart-amount>
             </div>
@@ -37,19 +37,19 @@
         props: {
             itemInfo: {
                 type: Object,
-                default: () =>{
+                default: () => {
                     return {
                         id: 1,
                         name: '',
                         price: '',
                         pic: '',
                         amount: 1
-                    }
+                    };
                 }
             }
         },
-        created(){
-            console.log(this.itemInfo)
+        created() {
+            console.log(this.itemInfo);
         }
     };
 </script>
