@@ -17,7 +17,7 @@
                 <div class="item-info-price">
                     ￥<span class="item-info-price-text">{{itemInfo.price}}</span>
                 </div>
-                <cart-amount :amount.sync="itemInfo.amount"></cart-amount>
+                <cart-amount :amount.sync="itemInfo.amount" @update:amount="updateAmount"></cart-amount>
             </div>
         </div>
 
@@ -39,7 +39,6 @@
                 type: Object,
                 default: () => {
                     return {
-                        id: 1,
                         name: '',
                         price: '',
                         pic: '',
@@ -48,8 +47,10 @@
                 }
             }
         },
-        created() {
-            console.log(this.itemInfo);
+        methods: {
+            updateAmount(n) {
+                this.$store.commit('changeAmount', { itemName: this.itemInfo.name, newAmount: n });
+            }
         }
     };
 </script>

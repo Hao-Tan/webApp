@@ -30,10 +30,12 @@ export default new Vuex.Store({
 
         // 添加到购物车，如果存在就amount加1，否则就添加该商品到数组最末端
         addCartItem(state, item) {
+            // 查找是否已经存在传入的商品的序号
             let itemIndex = _.findIndex(state.cartItems, originItem => {
                 return originItem.name === item.name;
             });
-            console.log(itemIndex, item);
+
+            // 根据序号去更新state
             if (itemIndex >= 0) {
                 this.commit('changeAmount', {itemName: item.name, amount: state.cartItems[itemIndex].amount + 1});
             } else {
@@ -44,25 +46,17 @@ export default new Vuex.Store({
         },
 
         // 改变商品的个数
-        changeAmount(state, {itemName, amount}) {
+        changeAmount(state, {itemName, newAmount}) {
             let itemIndex = _.findIndex(state.cartItems, originItem => {
                 return originItem.name === itemName;
             });
-            state.cartItems[itemIndex].amount = amount;
+            // console.log(state.cartItems[itemIndex].amount);
+            // state.cartItems[itemIndex].amount = newAmount;
             this.commit('updateItems');
         },
 
         // 从缓存中获取购物车列表
         getItems(state) {
-            state.cartItems = [
-                {
-                    name: '',
-                    price: '',
-                    pic: '',
-                    amount: 4
-                }
-            ];
-
             state.cartItems = storage.get(CART_CONTENT_KEY, []);
         },
 

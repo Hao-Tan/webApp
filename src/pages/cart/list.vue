@@ -29,7 +29,9 @@
         },
         computed: {
             cartItems() {
-                return this.$store.state.cartItems;
+                return (() => {
+                    return this.$store.state.cartItems;
+                })();
             }
         }
     };
