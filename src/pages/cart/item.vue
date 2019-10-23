@@ -1,8 +1,8 @@
 <template>
-    <li class="item">
+    <li class="item" @click="toDetail">
         <!-- 左侧按钮 -->
-        <div class="item-check">
-            <i class="iconfont">&#xe6ba;</i>
+        <div class="item-check" @click.stop="chooseItem">
+            <i class="iconfont" :class="{chosen: itemInfo.chosen}">&#xe6ba;</i>
         </div>
 
         <!-- 商品图片 -->
@@ -17,12 +17,12 @@
                 <div class="item-info-price">
                     ￥<span class="item-info-price-text">{{itemInfo.price}}</span>
                 </div>
-                <cart-amount :amount.sync="itemInfo.amount" @update:amount="updateAmount"></cart-amount>
+                <cart-amount :amount="itemInfo.amount" @update="updateAmount"></cart-amount>
             </div>
         </div>
 
         <div class="item-remove">
-            删除
+            <span class="item-remove-text" @click.stop="removeItem">删除</span>
         </div>
     </li>
 </template>
@@ -39,17 +39,28 @@
                 type: Object,
                 default: () => {
                     return {
+                        id: 0,
                         name: '',
-                        price: '',
+                        price: 0,
                         pic: '',
-                        amount: 1
+                        amount: 1,
+                        chosen: false
                     };
                 }
             }
         },
         methods: {
             updateAmount(n) {
-                this.$store.commit('changeAmount', { itemName: this.itemInfo.name, newAmount: n });
+                this.$store.commit('changeAmount', { itemId: this.itemInfo.id, newAmount: n });
+            },
+            removeItem() {
+                this.$store.commit('removeCartItem', { itemId: this.itemInfo.id });
+            },
+            toDetail() {
+                this.$router.push({name: 'home-product', params: {id: this.itemInfo.id}});
+            },
+            chooseItem() {
+                this.$store.commit('chooseCartItem', this.itemInfo);
             }
         }
     };
@@ -76,6 +87,9 @@
                     font-size:$icon-font-size;
                     color: #ddd;
 
+                    &.chosen{
+                        color: rgb(222, 24, 27);
+                    }
                 }
             }
 

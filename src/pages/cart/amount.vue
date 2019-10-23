@@ -1,8 +1,8 @@
 <template>
     <div class="amount">
-        <span class="minus" :class="{disabled: amount<=0}" @click="minus">-</span>
+        <span class="minus" :class="{disabled: amount<=1}" @click.stop="minus">-</span>
         <span class="amount-number">{{amount}}</span>
-        <span class="plus" @click="plus">+</span>
+        <span class="plus" @click.stop="plus">+</span>
     </div>
 </template>
 
@@ -17,13 +17,13 @@
         },
         methods: {
             minus() {
-                if (this.amount <= 0) {
+                if (this.amount <= 1) {
                     return;
                 }
-                this.$emit('update:amount', this.amount - 1);
+                this.$emit('update', this.amount - 1);
             },
             plus() {
-                this.$emit('update:amount', this.amount + 1);
+                this.$emit('update', this.amount + 1);
             }
         }
     };

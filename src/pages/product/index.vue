@@ -52,6 +52,7 @@
         methods: {
             addToCart() {
                 this.$store.commit('addCartItem', {
+                    id: this.$route.params.id,
                     name: this.res.content.title,
                     price: parseFloat(this.res.content.priceText),
                     pic: this.res.sliders[0]
