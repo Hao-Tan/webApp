@@ -117,7 +117,6 @@
         }
 
         animation: bounce-in 0.3s;
-
     }
 
     @keyframes bounce-in{

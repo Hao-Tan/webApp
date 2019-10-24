@@ -12,6 +12,7 @@
                 <product-seller :seller="res.content.seller"></product-seller>
             </me-scroll>
             <product-footer @addToCart="addToCart"></product-footer>
+            <me-popup msg="已添加至购物车" ref="popup"></me-popup>
         </div>
     </div>
 </template>
@@ -23,6 +24,7 @@
     import ProductRate from './rate';
     import ProductSeller from './seller';
     import ProductFooter from './footer';
+    import MePopup from 'base/popup';
     import MeScroll from 'base/scroll';
     import MeLoading from 'base/loading';
     import {getProductDetail} from 'api/product';
@@ -36,6 +38,7 @@
             ProductRate,
             ProductSeller,
             ProductFooter,
+            MePopup,
             MeLoading,
             MeScroll
         },
@@ -45,17 +48,25 @@
             };
         },
         created() {
-            getProductDetail(this.$route.params.id).then(res => {
-                this.res = res;
-            });
+            this.getDetails();
+        },
+        watch: {
+            '$route': 'getDetails'
         },
         methods: {
             addToCart() {
                 this.$store.commit('addCartItem', {
-                    id: this.$route.params.id,
+                    id: parseInt(this.$route.params.id),
                     name: this.res.content.title,
                     price: parseFloat(this.res.content.priceText),
                     pic: this.res.sliders[0]
+                });
+                this.$refs.popup.show();
+            },
+            getDetails() {
+                this.res = {};
+                this.$route.params.id && getProductDetail(this.$route.params.id).then(res => {
+                    this.res = res;
                 });
             }
         }

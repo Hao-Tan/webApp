@@ -50,15 +50,22 @@
             }
         },
         methods: {
+            // 更新商品的数量
             updateAmount(n) {
                 this.$store.commit('changeAmount', { itemId: this.itemInfo.id, newAmount: n });
             },
+
+            // 移除商品
             removeItem() {
                 this.$store.commit('removeCartItem', { itemId: this.itemInfo.id });
             },
+
+            // 跳转至商品的详情页
             toDetail() {
                 this.$router.push({name: 'home-product', params: {id: this.itemInfo.id}});
             },
+
+            // 选中当前商品，会计算当前选中商品的总价
             chooseItem() {
                 this.$store.commit('chooseCartItem', this.itemInfo);
             }
