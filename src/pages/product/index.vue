@@ -51,7 +51,9 @@
             this.getDetails();
         },
         watch: {
-            '$route': 'getDetails'
+            $route() {
+                this.getDetails();
+            }
         },
         methods: {
             addToCart() {
